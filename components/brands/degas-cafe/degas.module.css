@@ -1,0 +1,84 @@
+/* Degas Café (demo): carta impresa. Espresso, crema y caramelo; serif editorial; precios con puntos guía. */
+.root {
+  --espresso: #3a2318;
+  --roast: #5b3726;
+  --crema: #f2e5d0;
+  --paper: #fbf6ee;
+  --caramel: #b56f2e;
+  --c-bg: var(--paper);
+  --c-fg: #2b1a12;
+  --c-surface: #fffaf3;
+  --c-line: #dccab0;
+  --c-muted: #6e5646;
+  --c-accent: var(--espresso);
+  --c-accent-fg: var(--crema);
+  --radius: 10px;
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --font-body: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --art-bg: var(--crema);
+  --art-1: var(--roast);
+  --art-2: var(--caramel);
+  --art-3: #fff4e2;
+  line-height: 1.6;
+}
+.root :global(.mp-dialog-content h2) { font-weight: 400; font-size: 1.9rem; }
+.root :global(.mp-primary) { font-family: "Helvetica Neue", Arial, sans-serif; font-weight: 600; }
+
+.header { background: var(--espresso); color: var(--crema); }
+.headInner { max-width: 1100px; margin: 0 auto; padding: 1rem 16px; display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+.wordmark { font-family: var(--font-display); font-size: 2rem; font-style: italic; text-decoration: none; }
+.tagline { margin: 0; color: #cdb79c; font-size: .95rem; }
+.bag {
+  margin-left: auto; background: transparent; color: var(--crema); border: 1px solid #8c6a52; border-radius: 999px;
+  padding: .45rem 1rem; display: inline-flex; gap: .6rem; min-height: 44px; align-items: center;
+}
+.bag span { color: #e7c9a3; }
+
+.today { background: var(--crema); border-bottom: 1px solid var(--c-line); }
+.todayInner { max-width: 1100px; margin: 0 auto; padding: 1.75rem 16px 1.5rem; }
+.todayHead { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 2rem; margin-bottom: 1rem; }
+.todayHead h1 { font-family: var(--font-display); font-weight: 400; font-style: italic; font-size: clamp(2rem, 5vw, 3.2rem); margin: 0; line-height: 1.05; }
+.todayList { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.25rem 1.5rem; }
+.todayItem { display: grid; grid-template-columns: 84px 1fr; gap: .9rem; align-items: start; }
+.todayArt { border: 0; padding: 0; width: 84px; height: 84px; border-radius: 50%; overflow: hidden; background: none; }
+.todayArt svg { width: 100%; height: 100%; display: block; }
+.todayName { all: unset; cursor: pointer; font-family: var(--font-display); font-size: 1.3rem; line-height: 1.2; }
+.todayName:focus-visible { outline: 3px solid var(--caramel); outline-offset: 2px; }
+.todayName:hover { text-decoration: underline; text-underline-offset: 4px; }
+.todayPrice { margin: .1rem 0 0; color: var(--caramel); font-weight: 700; }
+
+.filters { max-width: 1100px; margin: 0 auto; padding: 1.25rem 16px .5rem; display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; align-items: center; font-family: "Helvetica Neue", Arial, sans-serif; font-size: .95rem; }
+.search { flex: 1 1 280px; }
+.search input { width: 100%; background: var(--c-surface); border: 1px solid var(--c-line); border-radius: var(--radius); padding: .55rem .8rem; min-height: 44px; }
+.select { display: inline-flex; gap: .5rem; align-items: center; }
+.select select { background: var(--c-surface); border: 1px solid var(--c-line); border-radius: var(--radius); padding: .45rem .6rem; min-height: 44px; }
+.toggle { display: inline-flex; gap: .45rem; align-items: center; }
+.toggle input { accent-color: var(--espresso); width: 18px; height: 18px; }
+
+.carta { max-width: 1100px; margin: 0 auto; padding: 1rem 16px 2rem; columns: 2 420px; column-gap: 3.5rem; }
+.section { break-inside: avoid; margin: 0 0 2.25rem; }
+.section h2 { font-family: var(--font-display); font-weight: 400; font-style: italic; font-size: 1.7rem; margin: 0 0 .6rem; padding-bottom: .3rem; border-bottom: 1px solid var(--c-line); color: var(--roast); }
+.section ul { list-style: none; padding: 0; margin: 0; }
+.section li[data-unavailable] { opacity: .55; }
+.entry { all: unset; box-sizing: border-box; cursor: pointer; display: block; width: 100%; padding: .45rem .25rem; border-radius: 6px; }
+.entry:hover { background: #f4e9d8; }
+.entry:focus-visible { outline: 3px solid var(--caramel); outline-offset: 1px; }
+.entryLine { display: flex; align-items: baseline; gap: .4rem; }
+.entryName { font-size: 1.12rem; }
+.leader { flex: 1; border-bottom: 2px dotted #c4ab8c; transform: translateY(-.3em); min-width: 1.5rem; }
+.entryPrice { font-variant-numeric: tabular-nums; }
+.entryDesc { display: block; color: var(--c-muted); font-size: .93rem; font-style: italic; }
+.na { color: #8a3b1e; }
+
+.drawer { background: var(--paper); border-left: 1px solid var(--c-line); }
+.drawer :global(.mp-cart h2) { font-weight: 400; font-style: italic; font-size: 2rem; }
+
+.floating {
+  display: none; position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 6; min-height: 52px;
+  background: var(--espresso); color: var(--crema); border: 0; border-radius: 999px; font-size: 1rem;
+}
+@media (max-width: 720px) {
+  .floating { display: block; }
+  .bag span { display: none; }
+  .carta { columns: 1; }
+}
