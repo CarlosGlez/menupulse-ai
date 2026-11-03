@@ -6,7 +6,7 @@ export function AdminLogin({ configured }: { configured: boolean }) {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   return (
-    <main className="ad-login">
+    <main className="mpa-login">
       <h1>Panel de simulación</h1>
       {!configured ? (
         <p>
@@ -25,13 +25,13 @@ export function AdminLogin({ configured }: { configured: boolean }) {
             else setError("El código no coincide con ADMIN_ACCESS_CODE.");
           }}
         >
-          <label htmlFor="ad-code">Código de acceso</label>
-          <input id="ad-code" type="password" autoComplete="current-password" value={code} onChange={(e) => setCode(e.target.value)} required />
-          <button type="submit" className="ad-primary" disabled={busy}>
+          <label htmlFor="mpa-code">Código de acceso</label>
+          <input id="mpa-code" type="password" autoComplete="current-password" value={code} onChange={(e) => setCode(e.target.value)} required />
+          <button type="submit" className="mpa-primary" disabled={busy}>
             {busy ? "Verificando…" : "Entrar al panel"}
           </button>
           {error && (
-            <p className="ad-error" role="alert">
+            <p className="mpa-error" role="alert">
               {error}
             </p>
           )}

@@ -12,20 +12,20 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const access = await adminAccess();
   if (access === "denied") {
     return (
-      <div className="ad-root">
+      <div className="mpa-root">
         <AdminLogin configured={Boolean(process.env.ADMIN_ACCESS_CODE)} />
       </div>
     );
   }
   return (
-    <div className="ad-root ad-shell">
+    <div className="mpa-root mpa-shell">
       <AdminNav canLogout={access === "granted"} />
-      <div className="ad-main">
+      <div className="mpa-main">
         {access === "open-dev" && (
-          <p className="ad-banner">Modo desarrollo: no hay ADMIN_ACCESS_CODE, así que el panel está abierto. En producción se pedirá el código.</p>
+          <p className="mpa-banner">Modo desarrollo: no hay ADMIN_ACCESS_CODE, así que el panel está abierto. En producción se pedirá el código.</p>
         )}
         {!isSupabaseConfigured() && (
-          <p className="ad-banner ad-banner-warn">
+          <p className="mpa-banner mpa-banner-warn">
             Sin Supabase configurado: los datos viven en memoria y se pierden al reiniciar el servidor. Llena .env.local para que el aprendizaje persista.
           </p>
         )}

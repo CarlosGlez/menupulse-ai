@@ -29,19 +29,19 @@ export default function CatalogPage() {
   return (
     <>
       <h1>Catálogo e inventario demo</h1>
-      <p className="ad-lede">
+      <p className="mpa-lede">
         Marca productos como agotados o ajusta el stock de demostración. Un producto agotado o con stock 0 deja de ser elegible y la IA no puede
         recomendarlo. Precios, tiempos de preparación y stock son datos demo, no oficiales.
       </p>
-      <div className="ad-toolbar">
+      <div className="mpa-toolbar">
         <BrandPicker brand={brand} onChange={setBrand} />
       </div>
       <ErrorNote error={error ?? loadError} />
-      <section className="ad-panel ad-scroll">
+      <section className="mpa-panel mpa-scroll">
         {!menu ? (
-          <p className="ad-empty">Cargando…</p>
+          <p className="mpa-empty">Cargando…</p>
         ) : (
-          <table className="ad-table">
+          <table className="mpa-table">
             <thead>
               <tr>
                 <th>Producto</th>
@@ -59,7 +59,7 @@ export default function CatalogPage() {
                   <td>
                     <strong>{p.name}</strong>
                     <br />
-                    <span className="ad-muted">{p.tags.join(", ")}</span>
+                    <span className="mpa-muted">{p.tags.join(", ")}</span>
                   </td>
                   <td>{cats.get(p.categoryId)}</td>
                   <td className="num">{p.price == null ? "pendiente" : money.format(p.price)}</td>

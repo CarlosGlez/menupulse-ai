@@ -18,7 +18,7 @@ export function RankList({
 }) {
   const prev = new Map(compareTo?.items.map((i) => [i.productId, i.position]) ?? []);
   return (
-    <ol className="ad-rank">
+    <ol className="mpa-rank">
       {rec.items.slice(0, limit).map((i) => {
         const before = prev.get(i.productId);
         let move: { cls: string; text: string } | null = null;
@@ -34,12 +34,12 @@ export function RankList({
             <span className="pos">{i.position}</span>
             <span>
               <span className="name">{p?.name ?? i.productId}</span>{" "}
-              <span className="ad-src">
+              <span className="mpa-src">
                 {i.source === "baseline" ? "orden fijo" : `${i.source === "trained" ? "entrenado" : "inicial"} · ${i.observations} obs. · puntaje ${i.score.toFixed(3)}`}
               </span>
             </span>
             {move ? (
-              <span className={`ad-move ${move.cls}`} title={before ? `Antes en la posición ${before}` : "No estaba en el ranking"}>
+              <span className={`mpa-move ${move.cls}`} title={before ? `Antes en la posición ${before}` : "No estaba en el ranking"}>
                 {move.text}
               </span>
             ) : (

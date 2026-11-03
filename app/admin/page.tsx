@@ -29,23 +29,23 @@ export default function AdminHome() {
   return (
     <>
       <h1>Resumen</h1>
-      <p className="ad-lede">
+      <p className="mpa-lede">
         Estado de las tres marcas. Para la demostración: aplica un escenario en el <Link href="/admin/simulador">Simulador</Link>, compáralo en{" "}
         <Link href="/admin/comparador">Manual vs. IA</Link>, entrena con clientes simulados en <Link href="/admin/entrenamiento">Entrenamiento</Link> y
         vuelve a aplicar el escenario para ver el cambio.
       </p>
       <ErrorNote error={error} />
-      <div className="ad-grid3">
+      <div className="mpa-grid3">
         {BRAND_OPTIONS.map((b) => {
           const s = data[b.slug];
           const lastRun = s?.trainingRuns.at(-1)?.result.evaluation;
           return (
-            <section key={b.slug} className="ad-panel">
+            <section key={b.slug} className="mpa-panel">
               <h2>{b.name}</h2>
               {!s ? (
-                <p className="ad-empty">{failed[b.slug] ? "No se pudieron cargar los datos (ver el aviso de arriba)." : "Cargando…"}</p>
+                <p className="mpa-empty">{failed[b.slug] ? "No se pudieron cargar los datos (ver el aviso de arriba)." : "Cargando…"}</p>
               ) : (
-                <dl className="ad-kpis">
+                <dl className="mpa-kpis">
                   <div>
                     <dt>Observaciones del modelo</dt>
                     <dd>{s.model.trainingEvents}</dd>
@@ -70,7 +70,7 @@ export default function AdminHome() {
               )}
               <p style={{ marginBottom: 0 }}>
                 <Link href={`/menu/${b.slug}`}>Abrir menú</Link>
-                {s?.model.updatedAt && <span className="ad-muted"> · modelo actualizado {new Date(s.model.updatedAt).toLocaleString("es-MX")}</span>}
+                {s?.model.updatedAt && <span className="mpa-muted"> · modelo actualizado {new Date(s.model.updatedAt).toLocaleString("es-MX")}</span>}
               </p>
             </section>
           );

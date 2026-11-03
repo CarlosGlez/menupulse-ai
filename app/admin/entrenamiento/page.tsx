@@ -114,19 +114,19 @@ export default function TrainingPage() {
       <h1>
         Entrenamiento con clientes simulados <SimTag />
       </h1>
-      <p className="ad-lede">
+      <p className="mpa-lede">
         Cada cliente ficticio recibe un contexto realista, ve los 4 productos destacados y responde según una preferencia oculta (en{" "}
         <code>lib/ai/synthetic.ts</code>) que el modelo no conoce. El modelo solo aprende de las recompensas observadas. Después de cada lote se
         evalúa con los mismos 200 clientes de prueba (semilla fija) contra el menú fijo.
       </p>
-      <div className="ad-toolbar">
+      <div className="mpa-toolbar">
         <BrandPicker brand={brand} onChange={setBrand} />
       </div>
 
-      <section className="ad-panel">
+      <section className="mpa-panel">
         <h2>Estado del modelo</h2>
         {status ? (
-          <dl className="ad-kpis">
+          <dl className="mpa-kpis">
             <div>
               <dt>Observaciones de entrenamiento</dt>
               <dd>{status.trainingEvents}</dd>
@@ -153,16 +153,16 @@ export default function TrainingPage() {
             </div>
           </dl>
         ) : (
-          <p className="ad-empty">Cargando…</p>
+          <p className="mpa-empty">Cargando…</p>
         )}
       </section>
 
-      <section className="ad-panel">
+      <section className="mpa-panel">
         <h2>Nuevo entrenamiento</h2>
-        <div className="ad-controls">
-          <div className="ad-field">
-            <span className="ad-label">Clientes por lote</span>
-            <div className="ad-chips" role="group" aria-label="Clientes por lote">
+        <div className="mpa-controls">
+          <div className="mpa-field">
+            <span className="mpa-label">Clientes por lote</span>
+            <div className="mpa-chips" role="group" aria-label="Clientes por lote">
               {SIZES.map((n) => (
                 <button key={n} type="button" aria-pressed={size === n} onClick={() => setSize(n)}>
                   {n}
@@ -170,7 +170,7 @@ export default function TrainingPage() {
               ))}
             </div>
           </div>
-          <div className="ad-field">
+          <div className="mpa-field">
             <label htmlFor="t-batches">Lotes seguidos</label>
             <select id="t-batches" value={batches} onChange={(e) => setBatches(Number(e.target.value))}>
               {[1, 3, 5, 10].map((n) => (
@@ -180,11 +180,11 @@ export default function TrainingPage() {
               ))}
             </select>
           </div>
-          <div className="ad-field">
+          <div className="mpa-field">
             <label htmlFor="t-seed">Semilla (reproducible)</label>
             <input id="t-seed" type="number" min={0} value={seed} onChange={(e) => setSeed(Math.max(0, Number(e.target.value) || 0))} />
           </div>
-          <div className="ad-field">
+          <div className="mpa-field">
             <label htmlFor="t-scn">Contextos</label>
             <select id="t-scn" value={scenario} onChange={(e) => setScenario(e.target.value)}>
               <option value="">Aleatorios (todo el día)</option>
@@ -196,33 +196,33 @@ export default function TrainingPage() {
             </select>
           </div>
         </div>
-        <div className="ad-toolbar" style={{ marginTop: "1rem", marginBottom: 0 }}>
-          <button type="button" className="ad-primary" onClick={train} disabled={running}>
+        <div className="mpa-toolbar" style={{ marginTop: "1rem", marginBottom: 0 }}>
+          <button type="button" className="mpa-primary" onClick={train} disabled={running}>
             {running ? "Entrenando…" : `Simular ${size * batches} clientes`}
           </button>
           {running && (
-            <button type="button" className="ad-secondary" onClick={() => (cancelRef.current = true)}>
+            <button type="button" className="mpa-secondary" onClick={() => (cancelRef.current = true)}>
               Cancelar después de este lote
             </button>
           )}
           {!confirmReset ? (
-            <button type="button" className="ad-danger" onClick={() => setConfirmReset(true)} disabled={running}>
+            <button type="button" className="mpa-danger" onClick={() => setConfirmReset(true)} disabled={running}>
               Reiniciar modelo
             </button>
           ) : (
             <span role="alert">
               ¿Borrar lo aprendido por este modelo?{" "}
-              <button type="button" className="ad-danger" onClick={reset}>
+              <button type="button" className="mpa-danger" onClick={reset}>
                 Sí, reiniciar
               </button>{" "}
-              <button type="button" className="ad-secondary" onClick={() => setConfirmReset(false)}>
+              <button type="button" className="mpa-secondary" onClick={() => setConfirmReset(false)}>
                 No
               </button>
             </span>
           )}
         </div>
         {progress && (
-          <p className="ad-banner" role="status" style={{ marginTop: ".75rem" }}>
+          <p className="mpa-banner" role="status" style={{ marginTop: ".75rem" }}>
             {progress}
           </p>
         )}
@@ -230,19 +230,19 @@ export default function TrainingPage() {
       </section>
 
       {ev && last && (
-        <section className="ad-panel">
+        <section className="mpa-panel">
           <h2>
             Resultado del último lote <SimTag />
           </h2>
-          <p className="ad-muted" style={{ marginTop: 0 }}>
+          <p className="mpa-muted" style={{ marginTop: 0 }}>
             {last.customers} clientes, semilla {last.seed}, {last.eventsRecorded} eventos registrados. Evaluación con {ev.evalCustomers} clientes de
             prueba iguales para las tres columnas.{" "}
             {ev.after.avgReward > ev.before.avgReward
               ? "La recompensa de evaluación subió con este lote."
               : "En este lote la recompensa de evaluación no subió; con pocos datos es normal que oscile."}
           </p>
-          <div className="ad-scroll">
-            <table className="ad-table">
+          <div className="mpa-scroll">
+            <table className="mpa-table">
               <thead>
                 <tr>
                   <th>Métrica (simulada)</th>
@@ -268,8 +268,8 @@ export default function TrainingPage() {
         </section>
       )}
 
-      <div className="ad-grid2">
-        <section className="ad-panel">
+      <div className="mpa-grid2">
+        <section className="mpa-panel">
           <LineChart
             title="Aprendizaje acumulado: recompensa en evaluación después de cada lote"
             xLabel="Lotes de entrenamiento (orden cronológico)"
@@ -280,7 +280,7 @@ export default function TrainingPage() {
             ]}
           />
         </section>
-        <section className="ad-panel">
+        <section className="mpa-panel">
           <LineChart
             title="Dentro del último lote: recompensa por ronda de 10 clientes"
             xLabel="Rondas"

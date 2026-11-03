@@ -15,8 +15,8 @@ const LINKS = [
 export function AdminNav({ canLogout }: { canLogout: boolean }) {
   const path = usePathname();
   return (
-    <nav className="ad-nav" aria-label="Secciones del panel">
-      <Link href="/" className="ad-home">
+    <nav className="mpa-nav" aria-label="Secciones del panel">
+      <Link href="/" className="mpa-home">
         MenuPulse AI
       </Link>
       <ul>
@@ -31,7 +31,7 @@ export function AdminNav({ canLogout }: { canLogout: boolean }) {
       {canLogout && (
         <button
           type="button"
-          className="ad-logout"
+          className="mpa-logout"
           onClick={async () => {
             await fetch("/api/admin/logout", { method: "POST" });
             window.location.reload();

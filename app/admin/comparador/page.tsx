@@ -53,14 +53,14 @@ export default function ComparatorPage() {
   return (
     <>
       <h1>Manual vs. IA</h1>
-      <p className="ad-lede">
+      <p className="mpa-lede">
         El mismo escenario con dos ordenamientos: el menú fijo (orden del catálogo, sin IA) y el ranking LinUCB. Las flechas indican cuánto se movió
         cada producto respecto al menú fijo. Esta vista no registra eventos.
       </p>
-      <div className="ad-toolbar">
+      <div className="mpa-toolbar">
         <BrandPicker brand={brand} onChange={setBrand} />
       </div>
-      <section className="ad-panel">
+      <section className="mpa-panel">
         <ScenarioChips
           current={scenarioId}
           onPick={(id) => {
@@ -80,19 +80,19 @@ export default function ComparatorPage() {
       </section>
       <ErrorNote error={error} />
       {ai && manual && (
-        <p className="ad-banner">
+        <p className="mpa-banner">
           La IA cambió {changed} de los 4 productos destacados. Tiempo de preparación promedio del top 4: manual {avgPrep(manual, products)}, IA{" "}
           {avgPrep(ai, products)}.
         </p>
       )}
-      <div className="ad-grid2">
-        <section className="ad-panel">
+      <div className="mpa-grid2">
+        <section className="mpa-panel">
           <h2>Menú fijo (sin IA)</h2>
-          {manual ? <RankList rec={manual} products={products} showReasons={false} /> : <p className="ad-empty">Calculando…</p>}
+          {manual ? <RankList rec={manual} products={products} showReasons={false} /> : <p className="mpa-empty">Calculando…</p>}
         </section>
-        <section className="ad-panel">
+        <section className="mpa-panel">
           <h2>Ranking adaptativo (LinUCB)</h2>
-          {ai ? <RankList rec={ai} compareTo={manual} products={products} /> : <p className="ad-empty">Calculando…</p>}
+          {ai ? <RankList rec={ai} compareTo={manual} products={products} /> : <p className="mpa-empty">Calculando…</p>}
         </section>
       </div>
     </>

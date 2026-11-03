@@ -44,13 +44,13 @@ export default function AnalyticsPage() {
       <h1>
         Analítica de aprendizaje <SimTag />
       </h1>
-      <p className="ad-lede">
+      <p className="mpa-lede">
         Métricas por marca y por origen de los eventos. “Interactivos” son las pruebas de personas en los menús; “sintéticos” son los clientes
         ficticios del entrenamiento. Ninguno representa ventas reales.
       </p>
-      <div className="ad-toolbar">
+      <div className="mpa-toolbar">
         <BrandPicker brand={brand} onChange={setBrand} />
-        <div className="ad-chips" role="group" aria-label="Origen de los eventos">
+        <div className="mpa-chips" role="group" aria-label="Origen de los eventos">
           <button type="button" aria-pressed={source === "synthetic"} onClick={() => setSource("synthetic")}>
             Entrenamiento sintético
           </button>
@@ -61,19 +61,19 @@ export default function AnalyticsPage() {
       </div>
       <ErrorNote error={error} />
       {!data || !m ? (
-        <p className="ad-empty">Cargando…</p>
+        <p className="mpa-empty">Cargando…</p>
       ) : (
         <>
-          <section className="ad-panel">
+          <section className="mpa-panel">
             <h2>{source === "synthetic" ? "Clientes simulados" : "Personas probando la demo"}</h2>
             {m.impressions === 0 ? (
-              <p className="ad-empty">
+              <p className="mpa-empty">
                 {source === "synthetic"
                   ? "Aún no hay entrenamiento para esta marca. Ve a Entrenamiento y simula algunos clientes."
                   : "Aún no hay interacciones. Abre el menú de esta marca, agrega productos y completa una orden simulada."}
               </p>
             ) : (
-              <dl className="ad-kpis">
+              <dl className="mpa-kpis">
                 <div>
                   <dt>Impresiones destacadas</dt>
                   <dd>{m.impressions}</dd>
@@ -115,8 +115,8 @@ export default function AnalyticsPage() {
               </dl>
             )}
           </section>
-          <div className="ad-grid2">
-            <section className="ad-panel">
+          <div className="mpa-grid2">
+            <section className="mpa-panel">
               <BarList
                 title="Productos más comprados"
                 unit="compras"
@@ -124,7 +124,7 @@ export default function AnalyticsPage() {
                 empty="Todavía no hay compras registradas en este origen."
               />
             </section>
-            <section className="ad-panel">
+            <section className="mpa-panel">
               <LineChart
                 title="Evolución en evaluación por lote de entrenamiento"
                 xLabel="Lotes (orden cronológico)"
@@ -136,7 +136,7 @@ export default function AnalyticsPage() {
               />
             </section>
           </div>
-          <section className="ad-panel">
+          <section className="mpa-panel">
             <h2>Modelo</h2>
             <p style={{ margin: 0 }}>
               {data.model.trainingEvents} observaciones de entrenamiento, {data.model.arms} productos con datos.{" "}

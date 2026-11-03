@@ -25,32 +25,32 @@ export default function HistoryPage() {
   return (
     <>
       <h1>Historial de recomendaciones</h1>
-      <p className="ad-lede">
+      <p className="mpa-lede">
         Las últimas 30 ejecuciones del motor: visitas a los menús y escenarios aplicados en el simulador, con el contexto, el top 4 y los factores
         que explicaron cada posición. “Aprendida” indica que la observación ya se cerró y actualizó el modelo.
       </p>
-      <div className="ad-toolbar">
+      <div className="mpa-toolbar">
         <BrandPicker brand={brand} onChange={setBrand} />
       </div>
       <ErrorNote error={error} />
       {!runs ? (
-        <p className="ad-empty">Cargando…</p>
+        <p className="mpa-empty">Cargando…</p>
       ) : runs.length === 0 ? (
-        <p className="ad-empty">Todavía no hay ejecuciones. Abre el menú de esta marca o aplica un escenario en el simulador.</p>
+        <p className="mpa-empty">Todavía no hay ejecuciones. Abre el menú de esta marca o aplica un escenario en el simulador.</p>
       ) : (
         runs.map((r) => (
-          <details key={r.id} className="ad-panel">
+          <details key={r.id} className="mpa-panel">
             <summary>
               <strong>{new Date(r.createdAt).toLocaleString("es-MX")}</strong> · {r.context.hour}:00, {r.context.day}, {r.context.weather},{" "}
               {Math.round(r.context.temperatureC)} °C, fila {r.context.queue}, demanda {Math.round(r.context.demand)} ·{" "}
               {r.mode === "adaptive" ? "IA" : "menú fijo"} · {r.closed ? "aprendida" : "abierta"}
             </summary>
-            <ol className="ad-rank" style={{ marginTop: ".5rem" }}>
+            <ol className="mpa-rank" style={{ marginTop: ".5rem" }}>
               {r.top.map((t, i) => (
                 <li key={i}>
                   <span className="pos">{i + 1}</span>
                   <span>
-                    <span className="name">{t.name}</span> <span className="ad-src">puntaje {t.score} · {t.source === "trained" ? "entrenado" : t.source === "initial" ? "inicial" : "fijo"}</span>
+                    <span className="name">{t.name}</span> <span className="mpa-src">puntaje {t.score} · {t.source === "trained" ? "entrenado" : t.source === "initial" ? "inicial" : "fijo"}</span>
                   </span>
                   <span />
                   <ul className="reasons">

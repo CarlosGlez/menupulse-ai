@@ -49,7 +49,7 @@ export async function api<T>(url: string, init?: { method?: string; body?: unkno
 
 export function BrandPicker({ brand, onChange }: { brand: BrandSlug; onChange: (b: BrandSlug) => void }) {
   return (
-    <div className="ad-brand" role="radiogroup" aria-label="Marca">
+    <div className="mpa-brand" role="radiogroup" aria-label="Marca">
       {BRAND_OPTIONS.map((b) => (
         <button key={b.slug} type="button" role="radio" aria-checked={brand === b.slug} onClick={() => onChange(b.slug)}>
           {b.name}
@@ -60,7 +60,7 @@ export function BrandPicker({ brand, onChange }: { brand: BrandSlug; onChange: (
 }
 
 export function SimTag() {
-  return <span className="ad-simtag">Datos simulados</span>;
+  return <span className="mpa-simtag">Datos simulados</span>;
 }
 
 export function pct(n: number) {
@@ -70,7 +70,7 @@ export function pct(n: number) {
 export function ErrorNote({ error }: { error: string | null }) {
   if (!error) return null;
   return (
-    <p className="ad-error" role="alert">
+    <p className="mpa-error" role="alert">
       {error}
     </p>
   );
@@ -94,9 +94,9 @@ export function LineChart({
   const P = { l: 52, r: 16, t: 16, b: 40 };
   if (all.length === 0) {
     return (
-      <figure className="ad-chart">
+      <figure className="mpa-chart">
         <figcaption>{title}</figcaption>
-        <p className="ad-empty">Todavía no hay datos. Ejecuta un entrenamiento para ver la curva.</p>
+        <p className="mpa-empty">Todavía no hay datos. Ejecuta un entrenamiento para ver la curva.</p>
       </figure>
     );
   }
@@ -107,13 +107,13 @@ export function LineChart({
   const y = (v: number) => P.t + (1 - (v - min) / (max - min || 1)) * (H - P.t - P.b);
   const ticks = [min, (min + max) / 2, max];
   return (
-    <figure className="ad-chart">
+    <figure className="mpa-chart">
       <figcaption>{title}</figcaption>
       <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={title}>
         {ticks.map((t) => (
           <g key={t}>
-            <line x1={P.l} x2={W - P.r} y1={y(t)} y2={y(t)} stroke="var(--ad-line)" />
-            <text x={P.l - 8} y={y(t) + 4} textAnchor="end" fontSize="11" fill="var(--ad-muted)">
+            <line x1={P.l} x2={W - P.r} y1={y(t)} y2={y(t)} stroke="var(--mpa-line)" />
+            <text x={P.l - 8} y={y(t) + 4} textAnchor="end" fontSize="11" fill="var(--mpa-muted)">
               {t.toFixed(2)}
             </text>
           </g>
@@ -128,14 +128,14 @@ export function LineChart({
             points={s.values.map((v, i) => `${x(i)},${y(v)}`).join(" ")}
           />
         ))}
-        <text x={(P.l + W - P.r) / 2} y={H - 8} textAnchor="middle" fontSize="12" fill="var(--ad-muted)">
+        <text x={(P.l + W - P.r) / 2} y={H - 8} textAnchor="middle" fontSize="12" fill="var(--mpa-muted)">
           {xLabel}
         </text>
-        <text x={14} y={H / 2} textAnchor="middle" fontSize="12" fill="var(--ad-muted)" transform={`rotate(-90 14 ${H / 2})`}>
+        <text x={14} y={H / 2} textAnchor="middle" fontSize="12" fill="var(--mpa-muted)" transform={`rotate(-90 14 ${H / 2})`}>
           {yLabel}
         </text>
       </svg>
-      <ul className="ad-legend">
+      <ul className="mpa-legend">
         {series.map((s) => (
           <li key={s.name}>
             <span style={{ background: s.color }} aria-hidden="true" />
@@ -150,19 +150,19 @@ export function LineChart({
 export function BarList({ title, items, unit, empty }: { title: string; items: { label: string; value: number }[]; unit: string; empty: string }) {
   const max = Math.max(1, ...items.map((i) => i.value));
   return (
-    <figure className="ad-chart">
+    <figure className="mpa-chart">
       <figcaption>{title}</figcaption>
       {items.length === 0 ? (
-        <p className="ad-empty">{empty}</p>
+        <p className="mpa-empty">{empty}</p>
       ) : (
-        <ul className="ad-bars">
+        <ul className="mpa-bars">
           {items.map((i) => (
             <li key={i.label}>
-              <span className="ad-bar-label">{i.label}</span>
-              <span className="ad-bar-track">
-                <span className="ad-bar-fill" style={{ width: `${(i.value / max) * 100}%` }} />
+              <span className="mpa-bar-label">{i.label}</span>
+              <span className="mpa-bar-track">
+                <span className="mpa-bar-fill" style={{ width: `${(i.value / max) * 100}%` }} />
               </span>
-              <span className="ad-bar-value">
+              <span className="mpa-bar-value">
                 {i.value} {unit}
               </span>
             </li>

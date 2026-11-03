@@ -84,15 +84,15 @@ export default function SimulatorPage() {
   return (
     <>
       <h1>Simulador de contexto</h1>
-      <p className="ad-lede">
+      <p className="mpa-lede">
         Cambia las condiciones simuladas y aplica el escenario para ver cómo se reordena el menú. Los productos agotados o fuera de horario nunca
         entran al ranking.
       </p>
-      <div className="ad-toolbar">
+      <div className="mpa-toolbar">
         <BrandPicker brand={brand} onChange={setBrand} />
       </div>
 
-      <section className="ad-panel" aria-labelledby="sim-ctx">
+      <section className="mpa-panel" aria-labelledby="sim-ctx">
         <h2 id="sim-ctx">Condiciones</h2>
         <ScenarioChips current={scenarioId} onPick={pickScenario} />
         <div style={{ height: 12 }} />
@@ -106,8 +106,8 @@ export default function SimulatorPage() {
         />
         <details style={{ marginTop: "1rem" }}>
           <summary>Carrito simulado ({ctx.cartProductIds.length})</summary>
-          <p className="ad-muted">Los productos elegidos se usan como contexto para la venta complementaria.</p>
-          <div className="ad-chips">
+          <p className="mpa-muted">Los productos elegidos se usan como contexto para la venta complementaria.</p>
+          <div className="mpa-chips">
             {menu?.products.map((p) => (
               <button
                 key={p.id}
@@ -122,13 +122,13 @@ export default function SimulatorPage() {
             ))}
           </div>
         </details>
-        <div className="ad-toolbar" style={{ marginTop: "1rem", marginBottom: 0 }}>
-          <button type="button" className="ad-primary" onClick={apply} disabled={busy}>
+        <div className="mpa-toolbar" style={{ marginTop: "1rem", marginBottom: 0 }}>
+          <button type="button" className="mpa-primary" onClick={apply} disabled={busy}>
             {busy ? "Calculando…" : "Aplicar escenario"}
           </button>
           <button
             type="button"
-            className="ad-secondary"
+            className="mpa-secondary"
             onClick={() => {
               storeContext(ctx, SCENARIOS.find((s) => s.id === scenarioId)?.name ?? "Escenario manual");
               setNotice("Listo: los menús abiertos en este navegador ya usan estas condiciones.");
@@ -136,42 +136,42 @@ export default function SimulatorPage() {
           >
             Usar estas condiciones en los menús
           </button>
-          <Link href={`/menu/${brand}`} target="_blank" className="ad-secondary" style={{ textDecoration: "none" }}>
+          <Link href={`/menu/${brand}`} target="_blank" className="mpa-secondary" style={{ textDecoration: "none" }}>
             Abrir menú completo
           </Link>
         </div>
-        {notice && <p className="ad-banner" role="status" style={{ marginTop: ".75rem" }}>{notice}</p>}
+        {notice && <p className="mpa-banner" role="status" style={{ marginTop: ".75rem" }}>{notice}</p>}
         <ErrorNote error={error} />
       </section>
 
-      <div className="ad-grid2">
-        <section className="ad-panel" aria-labelledby="sim-before">
+      <div className="mpa-grid2">
+        <section className="mpa-panel" aria-labelledby="sim-before">
           <h2 id="sim-before">Antes</h2>
-          {before ? <RankList rec={before} products={products} showReasons={false} /> : <p className="ad-empty">Calculando el ranking actual…</p>}
+          {before ? <RankList rec={before} products={products} showReasons={false} /> : <p className="mpa-empty">Calculando el ranking actual…</p>}
         </section>
-        <section className="ad-panel" aria-labelledby="sim-after">
+        <section className="mpa-panel" aria-labelledby="sim-after">
           <h2 id="sim-after">Después: recomendado para este momento</h2>
           {after ? (
             <>
-              <p className="ad-muted" style={{ marginTop: 0 }}>
+              <p className="mpa-muted" style={{ marginTop: 0 }}>
                 {trained ? "Usa el modelo entrenado." : "Usa el modelo inicial (pocos datos todavía)."} Motor calculado en {after.latencyMs.toFixed(2)} ms.
                 {after.ineligible.length > 0 && ` ${after.ineligible.length} productos no son elegibles (agotados o fuera de horario).`}
               </p>
               <RankList rec={after} compareTo={before} products={products} />
             </>
           ) : (
-            <p className="ad-empty">Aplica un escenario para ver el nuevo orden y por qué cambió.</p>
+            <p className="mpa-empty">Aplica un escenario para ver el nuevo orden y por qué cambió.</p>
           )}
         </section>
       </div>
 
-      <section className="ad-panel" aria-labelledby="sim-hist">
+      <section className="mpa-panel" aria-labelledby="sim-hist">
         <h2 id="sim-hist">Escenarios aplicados en esta sesión</h2>
         {history.length === 0 ? (
-          <p className="ad-empty">Aún no aplicas ningún escenario. El historial completo queda guardado en la sección Historial.</p>
+          <p className="mpa-empty">Aún no aplicas ningún escenario. El historial completo queda guardado en la sección Historial.</p>
         ) : (
-          <div className="ad-scroll">
-            <table className="ad-table">
+          <div className="mpa-scroll">
+            <table className="mpa-table">
               <thead>
                 <tr>
                   <th>Hora</th>
