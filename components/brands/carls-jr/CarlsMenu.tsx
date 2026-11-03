@@ -38,6 +38,8 @@ export function CarlsMenu({ menu }: { menu: MenuData }) {
   };
   const grouped = menu.categories.map((c) => ({ c, items: sf.filtered.filter((p) => p.categoryId === c.id) })).filter((g) => g.items.length);
 
+  const recKey = sf.recommended.map((r) => r.product.id).join("|");
+
   const cartPanel = (
     <CartPanel
       sf={sf}
@@ -57,7 +59,7 @@ export function CarlsMenu({ menu }: { menu: MenuData }) {
         <span className={s.demo}>Menú demo · no oficial</span>
         {!wide && (
           <button type="button" className={s.orderButton} onClick={() => setCartOpen(true)}>
-            Tu orden ({sf.totals.items}) · {money.format(sf.totals.total)}
+            Tu orden (<span key={sf.totals.items} className="mp-bump">{sf.totals.items}</span>) · {money.format(sf.totals.total)}
           </button>
         )}
       </header>
@@ -95,9 +97,9 @@ export function CarlsMenu({ menu }: { menu: MenuData }) {
               <ContextBar sf={sf} />
             </div>
             {sf.recError && <p role="alert">No se pudo calcular la recomendación: {sf.recError}. El menú completo sigue disponible.</p>}
-            <ol className={s.boardList} aria-busy={sf.loading} aria-label="Ranking recomendado">
-              {sf.recommended.map(({ item, product: p }) => (
-                <li key={p.id} className={s.boardRow}>
+            <ol key={recKey} className={s.boardList} aria-busy={sf.loading} aria-label="Ranking recomendado">
+              {sf.recommended.map(({ item, product: p }, i) => (
+                <li key={p.id} className={s.boardRow} style={{ "--i": i } as React.CSSProperties}>
                   <span className={s.rank} aria-label={`Posición ${item.position}`}>
                     {item.position}
                   </span>

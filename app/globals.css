@@ -125,3 +125,74 @@ html.mp-kiosk .mp-footer { display: none; }
 html.mp-kiosk .mp-root button { min-height: 52px; }
 .mp-kiosk-full { position: fixed; left: 16px; bottom: 16px; z-index: 7; border: 0; border-radius: 999px; padding: .6rem 1rem; background: rgb(0 0 0 / .75); color: #fff; }
 .mp-kiosk-idle { position: fixed; inset: auto 16px 90px 16px; z-index: 8; background: #111; color: #fff; border-radius: 12px; padding: 1rem 1.25rem; font-size: 1.15rem; text-align: center; }
+
+/* ---------- Movimiento ----------
+   Regla: el movimiento responde a algo (abrir, agregar, cambiar escenario).
+   El único momento "orquestado" por marca es el re-ranking de la recomendación. */
+:root {
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --ease-snap: cubic-bezier(.34, 1.56, .64, 1);
+}
+
+/* Modal de producto: aparece desde abajo con escala; fondo con desenfoque */
+.mp-dialog[open] { animation: mp-dialog-in .32s var(--ease-out); }
+.mp-dialog[open]::backdrop, .mp-drawer[open]::backdrop { animation: mp-fade .25s ease-out; backdrop-filter: blur(3px); }
+@keyframes mp-dialog-in { from { opacity: 0; transform: translateY(24px) scale(.97); } }
+@keyframes mp-fade { from { opacity: 0; } }
+.mp-dialog-art { overflow: hidden; }
+.mp-dialog[open] .mp-dialog-art svg { animation: mp-art-in .6s var(--ease-out) .05s both; }
+@keyframes mp-art-in { from { transform: scale(1.15) rotate(-8deg); opacity: 0; } }
+
+/* Panel del carrito: entra deslizándose */
+.mp-drawer[open] { animation: mp-drawer-in .34s var(--ease-out); }
+@keyframes mp-drawer-in { from { transform: translateX(100%); } }
+
+/* Botones: feedback al presionar */
+.mp-primary { transition: transform .12s ease, filter .15s ease, box-shadow .2s ease; }
+.mp-primary:not(:disabled):hover { filter: brightness(1.08); }
+.mp-primary:not(:disabled):active { transform: scale(.97); }
+.mp-dialog-close { transition: transform .2s var(--ease-out); }
+.mp-dialog-close:hover { transform: rotate(90deg); }
+
+/* Opciones del modal: el cambio de selección se nota */
+.mp-option { transition: border-color .15s ease, box-shadow .15s ease, transform .12s ease, background-color .15s ease; }
+.mp-option:active { transform: scale(.97); }
+.mp-option[data-checked] { animation: mp-pick .28s var(--ease-snap); }
+@keyframes mp-pick { 40% { transform: scale(1.05); } }
+.mp-qty button { transition: transform .1s ease; }
+.mp-qty button:not(:disabled):active { transform: scale(.85); }
+.mp-qty output { display: inline-block; }
+
+/* Contador del carrito: rebota cada vez que cambia (se re-monta con key) */
+.mp-bump { display: inline-block; animation: mp-bump .45s var(--ease-snap); }
+@keyframes mp-bump { 0% { transform: scale(1); } 35% { transform: scale(1.45); } 100% { transform: scale(1); } }
+
+/* Líneas del carrito y pantallas de confirmación */
+.mp-line { animation: mp-line-in .35s var(--ease-out) both; }
+@keyframes mp-line-in { from { opacity: 0; transform: translateX(16px); } }
+.mp-order-number { animation: mp-stamp .55s var(--ease-snap) both; }
+@keyframes mp-stamp { from { opacity: 0; transform: scale(1.6) rotate(-4deg); } }
+.mp-rating-row button { transition: transform .15s var(--ease-snap), border-color .15s ease, background-color .15s ease; }
+.mp-rating-row button:not(:disabled):hover { transform: translateY(-3px); }
+
+/* "¿Por qué veo esto?": la lista se despliega */
+.mp-why[open] ul, .mp-why[open] .mp-why-meta { animation: mp-why-in .25s var(--ease-out); }
+@keyframes mp-why-in { from { opacity: 0; transform: translateY(-4px); } }
+
+/* Mientras se recalcula la recomendación */
+[aria-busy="true"] { opacity: .45; transition: opacity .2s ease; }
+[aria-busy="false"] { transition: opacity .3s ease; }
+
+/* Vapor en bebidas calientes (lo usa ProductArt) */
+.mp-steam path { animation: mp-steam 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: bottom; }
+.mp-steam path:nth-child(2) { animation-delay: .5s; }
+.mp-steam path:nth-child(3) { animation-delay: 1s; }
+@keyframes mp-steam {
+  0% { opacity: 0; transform: translateY(6px) scaleY(.7); }
+  40% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-8px) scaleY(1.1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mp-steam path { animation: none !important; opacity: 1; }
+  [aria-busy="true"] { transition: none; }
+}

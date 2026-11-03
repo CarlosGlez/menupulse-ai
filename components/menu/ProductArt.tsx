@@ -105,7 +105,11 @@ const SHAPES: Record<Kind, React.ReactNode> = {
   ),
   hot: (
     <g>
-      <path d="M50 18 q6 8 0 16 M62 14 q6 8 0 16 M74 18 q6 8 0 16" stroke={B} strokeWidth="3" fill="none" strokeLinecap="round" />
+      <g className="mp-steam" stroke={B} strokeWidth="3" fill="none" strokeLinecap="round">
+        <path d="M50 18 q6 8 0 16" />
+        <path d="M62 14 q6 8 0 16" />
+        <path d="M74 18 q6 8 0 16" />
+      </g>
       <path d="M30 44 L90 44 L82 96 Q60 104 38 96 Z" fill={A} />
       <path d="M88 54 q16 4 0 24" stroke={A} strokeWidth="7" fill="none" />
       <ellipse cx="60" cy="46" rx="28" ry="5" fill={C} />

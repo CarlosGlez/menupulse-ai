@@ -114,3 +114,131 @@
   .mpa-main { padding: 1rem 16px 2rem; }
   .mpa-grid2 { grid-template-columns: 1fr; }
 }
+
+/* =====================================================================
+   Acabado y movimiento del panel. El movimiento solo acompaña cambios:
+   cambiar de sección, llegar datos nuevos, elegir marca o escenario.
+   ===================================================================== */
+.mpa-root {
+  --mpa-ease: cubic-bezier(.22, 1, .36, 1);
+  --mpa-snap: cubic-bezier(.34, 1.56, .64, 1);
+  --mpa-shadow: 0 1px 2px rgb(23 32 43 / .06), 0 4px 14px rgb(23 32 43 / .05);
+}
+
+/* ---- Marca y punto que late (mismo motivo que la portada) ---- */
+.mpa-pulse { flex: none; width: 10px; height: 10px; border-radius: 50%; background: #e2231a; position: relative; display: inline-block; }
+.mpa-pulse::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: inherit; animation: mpa-pulse 1.8s ease-out infinite; }
+@keyframes mpa-pulse { to { transform: scale(3.2); opacity: 0; } }
+.mpa-pulse-lg { width: 14px; height: 14px; margin-bottom: .75rem; }
+
+/* ---- Barra lateral ---- */
+.mpa-nav { background: linear-gradient(180deg, #17202b, #121921); gap: 1.25rem; }
+.mpa-home { display: flex; align-items: center; gap: .7rem; padding: .25rem .35rem .75rem; border-bottom: 1px solid #2a3542; }
+.mpa-home small { display: block; font-size: .75rem; font-weight: 500; color: #8c97a6; }
+.mpa-nav a { display: flex; align-items: center; gap: .65rem; position: relative; transition: background-color .15s ease, color .15s ease, padding-left .2s var(--mpa-ease); }
+.mpa-nav ul a:hover { padding-left: .85rem; }
+.mpa-nav a[aria-current="page"] { background: #233044; color: #fff; }
+.mpa-nav a[aria-current="page"]::before {
+  content: ""; position: absolute; left: -1rem; top: 6px; bottom: 6px; width: 3px; border-radius: 0 3px 3px 0;
+  background: var(--mpa-accent); animation: mpa-mark .3s var(--mpa-ease);
+}
+@keyframes mpa-mark { from { transform: scaleY(0); } }
+.mpa-nav a[aria-current="page"] .mpa-icon { stroke: #8fa8ff; }
+.mpa-icon { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; opacity: .9; }
+.mpa-nav-foot { margin-top: auto; display: flex; flex-direction: column; gap: .5rem; }
+.mpa-nav .mpa-nav-menus { border: 1px solid #2f3b49; justify-content: center; font-size: .9rem; }
+.mpa-logout { margin-top: 0; transition: border-color .15s ease, color .15s ease; }
+.mpa-logout:hover { border-color: #f0c4bf; color: #fff; }
+
+/* ---- Cambio de sección: el contenido entra suave ---- */
+.mpa-main > * { animation: mpa-in .45s var(--mpa-ease) backwards; }
+.mpa-main > :nth-child(2) { animation-delay: .04s; }
+.mpa-main > :nth-child(3) { animation-delay: .08s; }
+.mpa-main > :nth-child(4) { animation-delay: .12s; }
+.mpa-main > :nth-child(n + 5) { animation-delay: .16s; }
+@keyframes mpa-in { from { opacity: 0; transform: translateY(10px); } }
+.mpa-grid3 > .mpa-panel, .mpa-grid2 > .mpa-panel { animation: mpa-in .5s var(--mpa-ease) backwards; }
+.mpa-grid3 > .mpa-panel:nth-child(2), .mpa-grid2 > .mpa-panel:nth-child(2) { animation-delay: .07s; }
+.mpa-grid3 > .mpa-panel:nth-child(3) { animation-delay: .14s; }
+
+.mpa-main h1 { font-size: 1.9rem; letter-spacing: -.02em; }
+
+/* ---- Paneles, KPIs, avisos ---- */
+.mpa-panel { box-shadow: var(--mpa-shadow); border-color: #e1e6ed; border-radius: 12px; }
+.mpa-banner { border-left: 3px solid var(--mpa-accent); }
+.mpa-banner-warn { border-left-color: var(--mpa-sim); }
+.mpa-kpis div { background: linear-gradient(180deg, #fafbfd, #f3f6fa); transition: border-color .2s ease; }
+.mpa-kpis div:hover { border-color: #b9c4d6; }
+.mpa-kpis dd { animation: mpa-count .6s var(--mpa-ease) backwards; letter-spacing: -.01em; }
+@keyframes mpa-count { from { opacity: 0; transform: translateY(6px); filter: blur(3px); } }
+
+/* ---- Selector de marca: cada una con su color ---- */
+.mpa-brand { box-shadow: var(--mpa-shadow); }
+.mpa-brand button { display: inline-flex; align-items: center; gap: .45rem; transition: background-color .2s ease, color .2s ease; }
+.mpa-brand button:not([aria-checked="true"]):hover { background: #f1f4f8; }
+.mpa-brand-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--dot); box-shadow: 0 0 0 2px var(--dot-ring, transparent); transition: transform .3s var(--mpa-snap); }
+.mpa-brand button[data-brand="dominos"] { --dot: #0b4da2; --dot-ring: #e2231a; }
+.mpa-brand button[data-brand="carls-jr"] { --dot: #ffc20e; --dot-ring: #000; }
+.mpa-brand button[data-brand="degas-cafe"] { --dot: #b56f2e; --dot-ring: #3a2318; }
+.mpa-brand button[aria-checked="true"] .mpa-brand-dot { transform: scale(1.25); box-shadow: 0 0 0 2px #fff; }
+
+/* ---- Botones ---- */
+.mpa-primary { transition: transform .12s ease, filter .15s ease, box-shadow .2s ease; box-shadow: 0 2px 0 #1f3fa8; }
+.mpa-primary:not(:disabled):hover { filter: brightness(1.08); box-shadow: 0 4px 12px rgb(47 85 212 / .3); }
+.mpa-primary:not(:disabled):active, .mpa-secondary:not(:disabled):active, .mpa-danger:not(:disabled):active { transform: scale(.97); }
+.mpa-secondary, .mpa-danger { transition: border-color .15s ease, background-color .15s ease, transform .12s ease; }
+.mpa-secondary:not(:disabled):hover { border-color: #9aa7ba; background: #f8fafc; }
+.mpa-danger:not(:disabled):hover { border-color: var(--mpa-bad); background: #fff6f5; }
+
+/* ---- Controles de escenario ---- */
+.mpa-chips button { transition: background-color .15s ease, color .15s ease, border-color .15s ease, transform .12s ease; }
+.mpa-chips button:not([aria-pressed="true"]):hover { border-color: #9aa7ba; }
+.mpa-chips button:active { transform: scale(.95); }
+.mpa-chips button[aria-pressed="true"] { animation: mpa-pick .3s var(--mpa-snap); }
+@keyframes mpa-pick { 40% { transform: scale(1.06); } }
+.mpa-field select, .mpa-field input[type="number"], .mpa-field input[type="password"], .mpa-login input { transition: border-color .15s ease, box-shadow .15s ease; }
+.mpa-field select:focus-visible, .mpa-field input:focus-visible, .mpa-login input:focus-visible { border-color: var(--mpa-accent); box-shadow: 0 0 0 3px var(--mpa-accent-soft); }
+.mpa-field input[type="range"] { cursor: pointer; }
+
+/* ---- Rankings: entran fila por fila; el cambio de posición rebota ---- */
+.mpa-rank > li { animation: mpa-row .4s var(--mpa-ease) calc(var(--i, 0) * 45ms) backwards; transition: background-color .15s ease; }
+.mpa-rank > li:hover { background: #f7f9fc; }
+@keyframes mpa-row { from { opacity: 0; transform: translateX(-10px); } }
+.mpa-rank .pos { font-size: 1.05rem; }
+.mpa-rank > li:nth-child(-n + 3) .pos { color: var(--mpa-accent); }
+.mpa-move { display: inline-block; animation: mpa-move .5s var(--mpa-snap) calc(var(--i, 0) * 45ms + .25s) backwards; }
+@keyframes mpa-move { from { opacity: 0; transform: scale(.4); } }
+
+/* ---- Tablas ---- */
+.mpa-table tbody tr { transition: background-color .15s ease; }
+.mpa-table tbody tr:hover { background: #f7f9fc; }
+
+/* ---- Gráficas: la curva se dibuja y las barras crecen ---- */
+.mpa-line-draw { stroke-dasharray: 1; stroke-dashoffset: 0; animation: mpa-draw 1.2s var(--mpa-ease) backwards; stroke-linejoin: round; stroke-linecap: round; }
+@keyframes mpa-draw { from { stroke-dashoffset: 1; } }
+.mpa-line-fade { animation: mpa-fade .8s ease .5s backwards; }
+@keyframes mpa-fade { from { opacity: 0; } }
+.mpa-bar-track { overflow: hidden; }
+.mpa-bar-fill { transform-origin: left; animation: mpa-grow .7s var(--mpa-ease) calc(var(--i, 0) * 50ms) backwards; transition: width .5s var(--mpa-ease); background: linear-gradient(90deg, #2f55d4, #5b7cf0); }
+@keyframes mpa-grow { from { transform: scaleX(0); } }
+
+/* ---- Login ---- */
+.mpa-root:has(> .mpa-login) {
+  display: grid; place-items: center; padding: 16px;
+  background: radial-gradient(circle at 1px 1px, rgb(23 32 43 / .07) 1px, transparent 0) 0 0 / 20px 20px, var(--mpa-bg);
+}
+.mpa-login { margin: 0; width: 100%; box-shadow: 0 20px 50px rgb(23 32 43 / .12); border-radius: 16px; padding: 2rem; animation: mpa-in .5s var(--mpa-ease); }
+.mpa-login h1 { margin: 0 0 .35rem; font-size: 1.6rem; letter-spacing: -.01em; }
+.mpa-login .mpa-muted { margin: 0 0 1.25rem; }
+.mpa-login label { font-weight: 700; font-size: .9rem; }
+.mpa-error { animation: mpa-shake .35s ease; }
+@keyframes mpa-shake { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+@media (max-width: 860px) {
+  .mpa-nav a[aria-current="page"]::before { display: none; }
+  .mpa-nav-foot { flex-direction: row; flex-wrap: wrap; }
+  .mpa-home { border-bottom: 0; padding-bottom: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mpa-root *, .mpa-root *::before, .mpa-root *::after { animation: none !important; transition: none !important; }
+}

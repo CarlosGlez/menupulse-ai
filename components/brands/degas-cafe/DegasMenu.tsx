@@ -24,6 +24,8 @@ export function DegasMenu({ menu }: { menu: MenuData }) {
   };
   const grouped = menu.categories.map((c) => ({ c, items: sf.filtered.filter((p) => p.categoryId === c.id) })).filter((g) => g.items.length);
 
+  const recKey = sf.recommended.map((r) => r.product.id).join("|");
+
   return (
     <div className={`mp-root ${s.root}`}>
       <header className={s.header}>
@@ -35,7 +37,7 @@ export function DegasMenu({ menu }: { menu: MenuData }) {
           <button type="button" className={s.bag} onClick={() => setCartOpen(true)}>
             Tu pedido
             <span>
-              {sf.totals.items} · {money.format(sf.totals.total)}
+              <span key={sf.totals.items} className="mp-bump">{sf.totals.items}</span> · {money.format(sf.totals.total)}
             </span>
           </button>
         </div>
@@ -48,9 +50,9 @@ export function DegasMenu({ menu }: { menu: MenuData }) {
             <ContextBar sf={sf} />
           </div>
           {sf.recError && <p role="alert">No se pudo calcular la sugerencia: {sf.recError}. La carta completa sigue abajo.</p>}
-          <ul className={s.todayList} aria-busy={sf.loading}>
-            {sf.recommended.map(({ item, product: p }) => (
-              <li key={p.id} className={s.todayItem}>
+          <ul key={recKey} className={s.todayList} aria-busy={sf.loading}>
+            {sf.recommended.map(({ item, product: p }, i) => (
+              <li key={p.id} className={s.todayItem} style={{ "--i": i } as React.CSSProperties}>
                 <button type="button" className={s.todayArt} onClick={() => open(p)} aria-label={`Ver ${p.name}`}>
                   {art(p)}
                 </button>
@@ -129,7 +131,7 @@ export function DegasMenu({ menu }: { menu: MenuData }) {
         />
       </Drawer>
       <button type="button" className={s.floating} onClick={() => setCartOpen(true)}>
-        Tu pedido · {sf.totals.items} · {money.format(sf.totals.total)}
+        Tu pedido · <span key={sf.totals.items} className="mp-bump">{sf.totals.items}</span> · {money.format(sf.totals.total)}
       </button>
 
       <ProductDialog

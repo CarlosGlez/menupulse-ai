@@ -97,3 +97,49 @@
   .floatingCart { display: block; }
   .toolbar { top: 60px; }
 }
+
+/* ---------- Movimiento y acabado (Domino's: rápido, con rebote, sombras duras) ---------- */
+.hero {
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(circle at 1px 1px, rgb(255 255 255 / .09) 1.5px, transparent 0) 0 0 / 22px 22px,
+    linear-gradient(160deg, var(--blue) 55%, #0a438f 100%);
+}
+.hero::after {
+  content: ""; position: absolute; right: -3%; top: -40%; width: 12%; height: 180%;
+  background: var(--red); transform: rotate(18deg); opacity: .9; pointer-events: none;
+}
+.hero > * { position: relative; z-index: 1; }
+
+.cartButton { transition: transform .15s var(--ease-snap), box-shadow .15s ease; }
+.cartButton:hover { transform: translateY(-1px); box-shadow: 0 4px 0 var(--red); }
+.cartButton:active { transform: translateY(1px); box-shadow: none; }
+
+/* Re-ranking: las tarjetas entran una tras otra y la ilustración gira a su lugar */
+.recCard {
+  box-shadow: 0 6px 0 var(--blue-deep);
+  animation: dom-pop .5s var(--ease-snap) calc(var(--i, 0) * 80ms) backwards;
+  transition: transform .2s var(--ease-out), box-shadow .2s var(--ease-out);
+}
+.recCard:hover { transform: translateY(-4px); box-shadow: 0 10px 0 var(--blue-deep); }
+@keyframes dom-pop { from { opacity: 0; transform: translateY(36px) scale(.92); } }
+.recOpen { overflow: hidden; }
+.recArt > g { transform-box: view-box; transform-origin: 60px 60px; animation: dom-spin .8s var(--ease-out) calc(var(--i, 0) * 80ms + .15s) backwards; transition: transform .35s var(--ease-snap); }
+.recOpen:hover .recArt > g { transform: scale(1.08) rotate(-10deg); }
+@keyframes dom-spin { from { transform: scale(.55) rotate(-120deg); opacity: 0; } }
+
+.tabs button { transition: color .15s ease, border-color .2s ease; }
+.tabs button:hover { color: var(--blue-deep); }
+
+.card { transition: transform .18s var(--ease-out), border-color .15s ease, box-shadow .18s var(--ease-out); }
+.card:not([data-unavailable]):hover { transform: translateY(-3px); box-shadow: 0 5px 0 var(--blue); }
+.cardArt > g { transform-box: view-box; transform-origin: 60px 60px; transition: transform .35s var(--ease-snap); }
+.card:hover .cardArt > g { transform: scale(1.07) rotate(-6deg); }
+
+.floatingCart { box-shadow: 0 6px 0 #9e1711; transition: transform .12s ease, box-shadow .12s ease; }
+.floatingCart:active { transform: translateY(4px); box-shadow: 0 2px 0 #9e1711; }
+@media (max-width: 720px) {
+  .floatingCart { animation: dom-rise .45s var(--ease-snap) .3s both; }
+  .hero::after { display: none; }
+}
+@keyframes dom-rise { from { transform: translateY(120%); } }

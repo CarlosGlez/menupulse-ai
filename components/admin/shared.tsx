@@ -51,7 +51,8 @@ export function BrandPicker({ brand, onChange }: { brand: BrandSlug; onChange: (
   return (
     <div className="mpa-brand" role="radiogroup" aria-label="Marca">
       {BRAND_OPTIONS.map((b) => (
-        <button key={b.slug} type="button" role="radio" aria-checked={brand === b.slug} onClick={() => onChange(b.slug)}>
+        <button key={b.slug} type="button" role="radio" aria-checked={brand === b.slug} onClick={() => onChange(b.slug)} data-brand={b.slug}>
+          <span className="mpa-brand-dot" aria-hidden="true" />
           {b.name}
         </button>
       ))}
@@ -120,7 +121,9 @@ export function LineChart({
         ))}
         {series.map((s) => (
           <polyline
-            key={s.name}
+            key={`${s.name}-${s.values.length}`}
+            className={s.dashed ? "mpa-line-fade" : "mpa-line-draw"}
+            pathLength={s.dashed ? undefined : 1}
             fill="none"
             stroke={s.color}
             strokeWidth="2.5"
@@ -156,8 +159,8 @@ export function BarList({ title, items, unit, empty }: { title: string; items: {
         <p className="mpa-empty">{empty}</p>
       ) : (
         <ul className="mpa-bars">
-          {items.map((i) => (
-            <li key={i.label}>
+          {items.map((i, k) => (
+            <li key={i.label} style={{ "--i": k } as React.CSSProperties}>
               <span className="mpa-bar-label">{i.label}</span>
               <span className="mpa-bar-track">
                 <span className="mpa-bar-fill" style={{ width: `${(i.value / max) * 100}%` }} />

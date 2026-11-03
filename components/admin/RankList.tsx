@@ -19,7 +19,7 @@ export function RankList({
   const prev = new Map(compareTo?.items.map((i) => [i.productId, i.position]) ?? []);
   return (
     <ol className="mpa-rank">
-      {rec.items.slice(0, limit).map((i) => {
+      {rec.items.slice(0, limit).map((i, k) => {
         const before = prev.get(i.productId);
         let move: { cls: string; text: string } | null = null;
         if (compareTo) {
@@ -30,7 +30,7 @@ export function RankList({
         }
         const p = products.get(i.productId);
         return (
-          <li key={i.productId}>
+          <li key={i.productId} style={{ "--i": k } as React.CSSProperties}>
             <span className="pos">{i.position}</span>
             <span>
               <span className="name">{p?.name ?? i.productId}</span>{" "}

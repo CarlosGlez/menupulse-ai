@@ -100,3 +100,41 @@
   .priceBlock { grid-column: 2 / -1; flex-direction: row; justify-content: space-between; gap: .75rem; }
   .priceBlock span { margin: 0; }
 }
+
+/* ---------- Movimiento y acabado (Carl's: tablero de drive-thru que voltea sus filas) ---------- */
+.board { box-shadow: 0 0 0 1px #000, 0 0 36px rgb(255 194 14 / .12); }
+.boardHead h1 { text-shadow: 0 0 18px rgb(255 194 14 / .35); }
+
+/* Re-ranking: cada fila cae como una placa del tablero y el número "golpea" */
+.boardList { perspective: 900px; }
+.boardRow { transform-origin: top center; animation: cj-flip .55s var(--ease-out) calc(var(--i, 0) * 90ms) both; }
+@keyframes cj-flip { from { opacity: 0; transform: rotateX(-88deg); } 60% { opacity: 1; } }
+.rank { display: inline-block; animation: cj-slam .45s var(--ease-snap) calc(var(--i, 0) * 90ms + .3s) both; }
+@keyframes cj-slam { from { opacity: 0; transform: scale(2.4); } }
+
+.boardArt { overflow: hidden; }
+.boardArt svg > g { transform-box: view-box; transform-origin: 60px 80px; transition: transform .3s var(--ease-snap); }
+.boardRow:hover .boardArt svg > g { transform: scale(1.1) translateY(-3px); }
+
+.priceBlock { transition: transform .12s ease, box-shadow .12s ease, background-color .15s ease; }
+.priceBlock:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--red); }
+.priceBlock:active { transform: translate(0, 0); box-shadow: 0 0 0 var(--red); }
+
+.catList button { transition: color .15s ease, background-color .15s ease, padding-left .2s var(--ease-out); }
+.catList button:not([aria-pressed="true"]):hover { padding-left: 1rem; }
+
+.card { transition: border-color .15s ease, transform .18s var(--ease-out); }
+.card:not([data-unavailable]):hover { transform: translateY(-3px); }
+.cardArt { display: block; overflow: hidden; }
+.cardArt svg > g { transform-box: view-box; transform-origin: 60px 80px; transition: transform .35s var(--ease-snap); }
+.card:hover .cardArt svg > g { transform: scale(1.12) translateY(-4px); }
+.card:hover .cardPrice { color: #fff; }
+.cardPrice { transition: color .15s ease; }
+
+.orderButton { transition: transform .12s ease, filter .15s ease; }
+.orderButton:hover { filter: brightness(1.1); }
+.orderButton:active { transform: scale(.97); }
+
+@media (max-width: 760px) {
+  .catList button:not([aria-pressed="true"]):hover { padding-left: .75rem; }
+}

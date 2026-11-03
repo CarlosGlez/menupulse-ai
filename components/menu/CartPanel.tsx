@@ -95,7 +95,7 @@ export function CartPanel({
   return (
     <section className="mp-cart" aria-labelledby="mp-cart-title">
       <h2 id="mp-cart-title">
-        {title} {sf.totals.items > 0 && <span className="mp-count">({sf.totals.items})</span>}
+        {title} {sf.totals.items > 0 && <span className="mp-count">(<span key={sf.totals.items} className="mp-bump">{sf.totals.items}</span>)</span>}
       </h2>
       {sf.cart.length === 0 ? (
         <p className="mp-empty">{emptyText}</p>

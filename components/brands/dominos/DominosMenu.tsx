@@ -29,6 +29,9 @@ export function DominosMenu({ menu }: { menu: MenuData }) {
     .map((c) => ({ c, items: sf.filtered.filter((p) => p.categoryId === c.id) }))
     .filter((g) => g.items.length);
 
+  // Al cambiar el ranking se re-monta la lista y la entrada animada muestra que el menú se reacomodó.
+  const recKey = sf.recommended.map((r) => r.product.id).join("|");
+
   return (
     <div className={`mp-root ${s.root}`}>
       <header className={s.header}>
@@ -36,7 +39,7 @@ export function DominosMenu({ menu }: { menu: MenuData }) {
           Domino&apos;s Pizza<span className={s.demoTag}>demo</span>
         </Link>
         <button type="button" className={s.cartButton} onClick={() => setCartOpen(true)}>
-          Tu orden <span className={s.cartCount}>{sf.totals.items}</span>
+          Tu orden <span key={sf.totals.items} className={`${s.cartCount} mp-bump`}>{sf.totals.items}</span>
           <span className={s.cartTotal}>{money.format(sf.totals.total)}</span>
         </button>
       </header>
@@ -47,9 +50,9 @@ export function DominosMenu({ menu }: { menu: MenuData }) {
           <ContextBar sf={sf} />
         </div>
         {sf.recError && <p role="alert">No se pudo calcular la recomendación: {sf.recError}. El menú completo sigue disponible abajo.</p>}
-        <ol className={s.recRow} aria-busy={sf.loading}>
-          {sf.recommended.map(({ item, product: p }) => (
-            <li key={p.id} className={s.recCard}>
+        <ol key={recKey} className={s.recRow} aria-busy={sf.loading}>
+          {sf.recommended.map(({ item, product: p }, i) => (
+            <li key={p.id} className={s.recCard} style={{ "--i": i } as React.CSSProperties}>
               <button type="button" className={s.recOpen} onClick={() => open(p)} aria-label={`Ver ${p.name}`}>
                 {art(p, s.recArt)}
               </button>
@@ -122,7 +125,7 @@ export function DominosMenu({ menu }: { menu: MenuData }) {
       </main>
 
       <button type="button" className={s.floatingCart} onClick={() => setCartOpen(true)}>
-        Ver orden · {sf.totals.items} · {money.format(sf.totals.total)}
+        Ver orden · <span key={sf.totals.items} className="mp-bump">{sf.totals.items}</span> · {money.format(sf.totals.total)}
       </button>
 
       <Drawer open={cartOpen} onClose={() => setCartOpen(false)} label="Tu orden" className={s.drawer}>

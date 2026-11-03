@@ -7,7 +7,9 @@ export function AdminLogin({ configured }: { configured: boolean }) {
   const [busy, setBusy] = useState(false);
   return (
     <main className="mpa-login">
+      <span className="mpa-pulse mpa-pulse-lg" aria-hidden="true" />
       <h1>Panel de simulación</h1>
+      <p className="mpa-muted">Entrena el modelo, aplica escenarios y compara el menú fijo contra la IA.</p>
       {!configured ? (
         <p>
           El panel está cerrado porque falta la variable <code>ADMIN_ACCESS_CODE</code> en el servidor. Agrégala en las variables de

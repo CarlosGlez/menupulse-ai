@@ -82,3 +82,34 @@
   .bag span { display: none; }
   .carta { columns: 1; }
 }
+
+/* ---------- Movimiento y acabado (Degas: lento y cálido, como tinta sobre papel) ---------- */
+.root {
+  background:
+    radial-gradient(ellipse at 15% 0%, rgb(181 111 46 / .07), transparent 55%),
+    radial-gradient(ellipse at 100% 60%, rgb(91 55 38 / .05), transparent 50%),
+    var(--paper);
+}
+.today { background: linear-gradient(180deg, var(--crema), #efdfc6); }
+
+/* Re-ranking: las sugerencias aparecen despacio, como si se escribieran en la pizarra */
+.todayItem { animation: dg-ink .9s var(--ease-out) calc(var(--i, 0) * 140ms) backwards; }
+@keyframes dg-ink { from { opacity: 0; filter: blur(6px); transform: translateY(8px); } }
+.todayArt { box-shadow: 0 0 0 3px var(--crema), 0 0 0 4px var(--caramel); transition: transform .4s var(--ease-out), box-shadow .3s ease; }
+.todayItem:hover .todayArt { transform: rotate(-6deg) scale(1.05); box-shadow: 0 0 0 3px var(--crema), 0 0 0 5px var(--roast); }
+
+.bag { transition: background-color .2s ease, border-color .2s ease; }
+.bag:hover { background: rgb(242 229 208 / .08); border-color: var(--crema); }
+
+/* Carta: al pasar, los puntos guía se tiñen de caramelo */
+.entry { transition: background-color .25s ease; }
+.leader { transition: border-color .25s ease; }
+.entryPrice { transition: color .25s ease; }
+.entry:hover .leader { border-color: var(--caramel); }
+.entry:hover .entryPrice { color: var(--caramel); }
+
+.floating { box-shadow: 0 10px 24px rgb(58 35 24 / .3); }
+@media (max-width: 720px) {
+  .floating { animation: dg-rise .6s var(--ease-out) .4s both; }
+}
+@keyframes dg-rise { from { opacity: 0; transform: translateY(30px); } }
